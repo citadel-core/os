@@ -1,10 +1,10 @@
 {{- $board := or .board "tobereplaced" -}}
 {{- $suite := or .suite "bookworm" -}}
 {{- $mirror := or .mirror "https://deb.debian.org/debian" -}}
-{{- $hostname := or .hostname (printf "plebian-%s" $board) -}}
-{{- $image := or .image (printf "plebian-debian-%s-%s.img" $suite $board) -}}
-{{- $username := or .username "pleb" -}}
-{{- $password := or .password "pleb" -}}
+{{- $hostname := or .hostname "citadel" -}}
+{{- $image := or .image (printf "citadel-os-debian-%s-%s.img" $suite $board) -}}
+{{- $username := or .username "citadel" -}}
+{{- $password := or .password "freedom" -}}
 
 architecture: "arm64"
 
@@ -117,8 +117,8 @@ actions:
     destination: /usr/lib/NetworkManager/conf.d/
 
   - action: overlay
-    description: Copy initramfs from Plebian
-    source: overlays/initramfs-tools-plebian/
+    description: Copy initramfs from Citadel OS
+    source: overlays/initramfs-tools-citadel-os/
     destination: /etc/initramfs-tools/
 
   - action: run
@@ -141,6 +141,53 @@ actions:
     description: Set up user
     chroot: true
     script: scripts/setup-user.sh {{ $username }} {{ $password }}
+
+  - action: apt
+    description: Install Citadel dependencies
+    update: true
+    recommends: true
+    packages:
+      - git
+      - jq
+      - python3-qrcode
+      - python3-pip
+      - python3-yaml
+      - python3-semver
+
+  - action: run
+    description: Install Docker & the compose plugin
+    chroot: true
+    command: |
+      curl -fsSL https://get.docker.com | sh
+      usermod -a -G docker {{ $username }}
+      mkdir -p /usr/lib/docker/cli-plugins
+      curl -o /usr/lib/docker/cli-plugins/docker-compose https://github.com/docker/compose/releases/download/v2.10.2/docker-compose-linux-aarch64
+      chmod +x /usr/lib/docker/cli-plugins/docker-compose
+
+  - action: run
+    description: Fix avahi config to prevent hostname cycling
+    chroot: true
+    command: sed -i "s/#allow-interfaces=eth0/allow-interfaces=eth0,wlan0/g;" /etc/avahi/avahi-daemon.conf
+
+  - action: run
+    description: Fix avahi config to prevent hostname cycling
+    chroot: true
+    command: sed -i "s/#allow-interfaces=eth0/allow-interfaces=eth0,wlan0/g;" /etc/avahi/avahi-daemon.conf
+
+  - action: run
+    description: Download Citadel
+    chroot: true
+    command: git clone -b caddy https://github.com/citadel-core/core /home/citadel/citadel
+
+  - action: run
+    description: Install Citadel system services
+    chroot: true
+    script: scripts/install-services.sh
+
+  - action: run
+    description: Transfer ownership of Citadel data to Citadel user
+    chroot: true
+   command: chown -R citadel:citadel /home/citadel/citadel
 
   - action: run
     description: Clean rootfs

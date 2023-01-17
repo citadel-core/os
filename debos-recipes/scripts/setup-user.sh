@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Taken from mobian-recipes, modified for Plebian
+# Taken from mobian-recipes, modified for Citadel OS
 
 USERNAME=$1
 [ "$USERNAME" ] || exit 1
@@ -20,6 +20,3 @@ adduser "$USERNAME" input
 adduser "$USERNAME" dialout
 
 echo "$USERNAME:$PASSWORD" | chpasswd
-
-# Expire the password so the user is forced to set one
-passwd -e "$USERNAME"

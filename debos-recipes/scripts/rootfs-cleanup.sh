@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Taken from mobian-recipes, modified for Plebian
+# Taken from mobian-recipes, modified for Citadel OS
 
 # Remove apt packages which are no longer unnecessary and delete
 # downloaded packages

@@ -2,5 +2,5 @@
 
 set -e
 
-rm -f /usr/share/u-boot-menu/conf.d/20-plebian-dtbs.conf
+rm -f /usr/share/u-boot-menu/conf.d/20-citadel-os-dtbs.conf
 u-boot-update

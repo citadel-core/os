@@ -13,8 +13,8 @@ elif [ "$BOARD" = "soquartz-model-a" ] ; then
 fi
 
 mkdir -p /usr/share/u-boot-menu/conf.d/
-cat <<EOF > /usr/share/u-boot-menu/conf.d/10-plebian.conf
-## /usr/share/u-boot-menu/conf.d/10-plebian.conf - configuration file for u-boot-update(8)
+cat <<EOF > /usr/share/u-boot-menu/conf.d/10-citadel-os.conf
+## /usr/share/u-boot-menu/conf.d/10-citadel-os.conf - configuration file for u-boot-update(8)
 ## AUTOMATICALLY GENERATED FILE - DO NOT EDIT!
 ## Instead, put your configuration into /etc/u-boot-menu/conf.d/*.conf
 ## Files there will override values of config fragments in this directory

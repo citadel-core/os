@@ -115,7 +115,7 @@ jobs:
       - name: Archive Device Tree Debs
         uses: actions/upload-artifact@v3
         with:
-          name: devicetrees-plebian-quartz64
+          name: devicetrees-citadel-os-quartz64
           path: |
             deb-pkg/*.deb
   build_image:
@@ -200,5 +200,5 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         with:
           files: |
-            artifacts/**/plebian*.img.xz
-            artifacts/devicetrees-plebian-quartz64/devicetrees-plebian-*.deb
+            artifacts/**/citadel-os*.img.xz
+            artifacts/devicetrees-citadel-os-quartz64/devicetrees-citadel-os-*.deb

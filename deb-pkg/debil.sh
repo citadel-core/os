@@ -18,7 +18,7 @@ fi
 
 mkdir -p control
 cat <<EOF > control/control
-Package: devicetrees-plebian-quartz64
+Package: devicetrees-citadel-os-quartz64
 Source: linux-upstream
 Version: $2-$3
 Architecture: arm64
@@ -26,8 +26,8 @@ Maintainer: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
 Installed-Size: $(du -s data/ | cut -f1)
 Section: kernel
 Priority: optional
-Homepage: https://github.com/Plebian-Linux/quartz64-images
-Description: Plebian specific device trees for Quartz64
+Homepage: https://github.com/citadel-core/quartz64-images
+Description: Citadel OS specific device trees for Quartz64
  This package contains device trees for booting and running
  PINE64 Quartz64 single board computers.
 EOF

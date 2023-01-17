@@ -1,4 +1,4 @@
-# Plebian Quartz64 Images
+# Citadel OS Quartz64 Images
 
 This repository contains the GitHub workflow files and debos recipes to create
 custom Debian-based operating system images for the Quartz64 line of SBCs from
