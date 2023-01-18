@@ -155,12 +155,12 @@ actions:
       - python3-semver
       - curl
       - rsync
+      - docker.io
 
   - action: run
     description: Install Docker & the compose plugin
     chroot: true
     command: |
-      curl -fsSL https://get.docker.com | sh
       usermod -a -G docker {{ $username }}
       mkdir -p /usr/lib/docker/cli-plugins
       curl -o /usr/lib/docker/cli-plugins/docker-compose https://github.com/docker/compose/releases/download/v2.10.2/docker-compose-linux-aarch64
