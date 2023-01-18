@@ -153,6 +153,8 @@ actions:
       - python3-pip
       - python3-yaml
       - python3-semver
+      - curl
+      - rsync
 
   - action: run
     description: Install Docker & the compose plugin
