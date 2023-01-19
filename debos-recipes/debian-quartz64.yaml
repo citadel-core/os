@@ -156,6 +156,7 @@ actions:
       - curl
       - rsync
       - docker.io
+      - avahi-daemon
 
   - action: run
     description: Install Docker & the compose plugin
