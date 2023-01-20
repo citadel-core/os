@@ -164,7 +164,7 @@ actions:
     command: |
       usermod -a -G docker {{ $username }}
       mkdir -p /usr/lib/docker/cli-plugins
-      curl -o /usr/lib/docker/cli-plugins/docker-compose https://github.com/docker/compose/releases/download/v2.10.2/docker-compose-linux-aarch64
+      curl -o /usr/lib/docker/cli-plugins/docker-compose https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-linux-aarch64
       chmod +x /usr/lib/docker/cli-plugins/docker-compose
 
   - action: run
