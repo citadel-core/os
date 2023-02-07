@@ -10,7 +10,7 @@ DTDEB_OUTNAME="devicetrees-citadel-os-quartz64-$DTDEB_VERSION-$DTDEB_REVISION_$D
 # Download quartz64-deploy branch archive
 rm -f linux-quartz64-deploy.zip
 rm -rf linux-quartz64-deploy
-wget -q -O linux-quartz64-deploy.zip https://github.com/AarpnDewes/linux/archive/refs/heads/patch-1.zip
+wget -q -O linux-quartz64-deploy.zip https://github.com/AaronDewes/linux/archive/refs/heads/patch-1.zip
 unzip -q linux-quartz64-deploy.zip
 
 # Build the DTBs
