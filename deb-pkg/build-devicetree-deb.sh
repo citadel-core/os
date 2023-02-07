@@ -12,6 +12,7 @@ rm -f linux-quartz64-deploy.zip
 rm -rf linux-quartz64-deploy
 wget -q -O linux-quartz64-deploy.zip https://github.com/AaronDewes/linux/archive/refs/heads/patch-1.zip
 unzip -q linux-quartz64-deploy.zip
+mv patch-1 linux-quartz64-deploy
 
 # Build the DTBs
 cd linux-quartz64-deploy
