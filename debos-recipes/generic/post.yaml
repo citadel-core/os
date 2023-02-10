@@ -1,3 +1,5 @@
+architecture: "arm64"
+
 actions:
   - action: run
     description: Clean rootfs
