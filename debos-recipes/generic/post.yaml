@@ -1,0 +1,5 @@
+actions:
+  - action: run
+    description: Clean rootfs
+    chroot: true
+    script: scripts/rootfs-cleanup.sh

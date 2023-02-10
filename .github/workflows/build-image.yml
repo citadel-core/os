@@ -27,6 +27,11 @@ jobs:
             uboot-config: "evb-rk3568_defconfig",
             uboot-name: "evb-rk3568"
           },
+          {
+            name: "Rockpro64",
+            uboot-config: "rockpro64-rk3399_defconfig",
+            uboot-name: "rockpro64"
+          },
         ]
     runs-on: ubuntu-22.04
     steps:
@@ -126,28 +131,33 @@ jobs:
         boards: [
           {
             name: "Quartz64 Model A",
-            debos-yaml: "debian-quartz64a.yaml",
+            debos-yaml: "quartz/quartz64a.yaml",
             uboot-name: "quartz64a"
           },
           {
             name: "Quartz64 Model B",
-            debos-yaml: "debian-quartz64b.yaml",
+            debos-yaml: "quartz/quartz64b.yaml",
             uboot-name: "quartz64b"
           },
           {
             name: "SOQuartz CM4 IO Board",
-            debos-yaml: "debian-soquartz-cm4.yaml",
+            debos-yaml: "quartz/soquartz-cm4.yaml",
             uboot-name: "soquartz"
           },
           {
             name: "SOQuartz Blade",
-            debos-yaml: "debian-soquartz-blade.yaml",
+            debos-yaml: "quartz/soquartz-blade.yaml",
             uboot-name: "soquartz"
           },
           {
             name: "SOQuartz Model A",
-            debos-yaml: "debian-soquartz-model-a.yaml",
+            debos-yaml: "quartz/soquartz-model-a.yaml",
             uboot-name: "soquartz"
+          },
+          {
+            name: "Rockpro64",
+            debos-yaml: "rockpro/rockpro.yaml",
+            uboot-name: "rockpro64"
           },
         ]
     runs-on: ubuntu-22.04

@@ -1,0 +1,60 @@
+{{- $username := or .username "citadel" -}}
+{{- $password := or .password "freedom" -}}
+
+architecture: arm64
+
+actions:
+  - action: run
+    description: Set up user
+    chroot: true
+    script: scripts/setup-user.sh {{ $username }} {{ $password }}
+
+  - action: apt
+    description: Install Citadel dependencies
+    update: true
+    recommends: true
+    packages:
+      - git
+      - jq
+      - python3-qrcode
+      - python3-pip
+      - python3-yaml
+      - python3-semver
+      - curl
+      - rsync
+      - docker.io
+      - avahi-daemon
+
+  - action: run
+    description: Install Docker & the compose plugin
+    chroot: true
+    command: |
+      usermod -a -G docker {{ $username }}
+      mkdir -p /usr/lib/docker/cli-plugins
+      curl -o /usr/lib/docker/cli-plugins/docker-compose https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-linux-aarch64
+      chmod +x /usr/lib/docker/cli-plugins/docker-compose
+
+  - action: run
+    description: Fix avahi config to prevent hostname cycling
+    chroot: true
+    command: sed -i "s/#allow-interfaces=eth0/allow-interfaces=eth0,wlan0/g;" /etc/avahi/avahi-daemon.conf
+
+  - action: run
+    description: Fix avahi config to prevent hostname cycling
+    chroot: true
+    command: sed -i "s/#allow-interfaces=eth0/allow-interfaces=eth0,wlan0/g;" /etc/avahi/avahi-daemon.conf
+
+  - action: run
+    description: Download Citadel
+    chroot: true
+    command: git clone -b caddy https://github.com/citadel-core/core /home/citadel/citadel
+
+  - action: run
+    description: Install Citadel system services
+    chroot: true
+    script: scripts/install-services.sh
+
+  - action: run
+    description: Transfer ownership of Citadel data to Citadel user
+    chroot: true
+    command: chown -R citadel:citadel /home/citadel/citadel
