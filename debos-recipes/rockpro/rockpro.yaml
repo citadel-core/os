@@ -83,13 +83,13 @@ actions:
   - action: raw
     description: Write U-Boot SPL image
     origin: recipe
-    source: '/u-boot/idbloader.img'
+    source: '../u-boot/idbloader.img'
     partition: idbloader
 
   - action: raw
     description: Write u-boot.itb
     origin: recipe
-    source: '/u-boot/u-boot.itb'
+    source: '../u-boot/u-boot.itb'
     partition: uboot
 
   - action: run
