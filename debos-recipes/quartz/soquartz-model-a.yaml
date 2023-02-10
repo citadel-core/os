@@ -4,6 +4,6 @@ architecture: "arm64"
 
 actions:
   - action: recipe
-    recipe: "quartz64-base.yaml"
+    recipe: "quartz-base.yaml"
     variables:
       board: {{ $board }}
