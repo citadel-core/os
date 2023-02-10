@@ -17,11 +17,6 @@ actions:
       hostname: {{ $hostname }}
 
   - action: overlay
-    description: Copy apt config for Sid
-    source: overlays/apt/
-    destination: /etc/apt/
-
-  - action: overlay
     description: Copy initramfs overlay
     source: overlays/initramfs-tools-citadel-os/
     destination: /etc/initramfs-tools/
