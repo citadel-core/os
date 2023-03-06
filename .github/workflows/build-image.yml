@@ -80,7 +80,7 @@ jobs:
       - name: Install toolchain
         run: |
             sudo apt-get update
-            sudo apt-get install build-essential crossbuild-essential-arm64 crossbuild-essential-armhf device-tree-compiler
+            sudo apt-get install build-essential crossbuild-essential-arm64 gcc-arm-none-eabi device-tree-compiler
       - name: Clone ARM trusted firmwarer repository
         uses: actions/checkout@v3
         with:
@@ -90,7 +90,7 @@ jobs:
         run: |
           cd arm-trusted-firmware
           git rm '*.bin'
-          make -j$(nproc) PLAT=rk3399 CROSS_COMPILE=aarch64-unknown-linux-gnu- bl31
+          make -j$(nproc) PLAT=rk3399 CROSS_COMPILE=aarch64-linux-gnu- bl31
           cd ..
       - name: Clone u-boot repository
         uses: actions/checkout@v3
