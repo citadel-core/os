@@ -101,9 +101,9 @@ jobs:
         run: |
           cd u-boot
           make mrproper
-      #- name: Fetch old rkbins
-        #run: |
-          #wget -q https://github.com/rockchip-linux/rkbin/blob/a4c6de9ea29f275bb1d08c94ccded51ff2ab5b92/bin/rk33/rk3399_ddr_800MHz_v1.27.bin?raw=true -O u-boot/ram_init.bin
+      - name: Fetch old rkbins
+        run: |
+          wget -q https://github.com/rockchip-linux/rkbin/blob/a4c6de9ea29f275bb1d08c94ccded51ff2ab5b92/bin/rk33/rk3399_ddr_800MHz_v1.27.bin?raw=true -O u-boot/ram_init.bin
       - name: Build u-boot
         run: |
           cd u-boot
