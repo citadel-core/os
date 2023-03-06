@@ -108,7 +108,7 @@ jobs:
         run: |
           cd u-boot
           make ARCH=arm CROSS_COMPILE=aarch64-linux-gnu- ${{ matrix.boards.uboot-config }}
-          make BL31=$(realpath ../arm-trusted-firmware/bl31.elf) ARCH=arm CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
+          make BL31=$(realpath ../arm-trusted-firmware/build/rk3399/release/bl31/bl31.elf) ARCH=arm CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
       - name: Archive u-boot artifacts
         uses: actions/upload-artifact@v3
         with:
