@@ -3,7 +3,7 @@ on:
  - push
  - workflow_dispatch
 jobs:
-  build_uboot:
+  build_uboot_quartz:
     strategy:
       matrix:
         boards: [
@@ -26,11 +26,6 @@ jobs:
             name: "EVB",
             uboot-config: "evb-rk3568_defconfig",
             uboot-name: "evb-rk3568"
-          },
-          {
-            name: "Rockpro64",
-            uboot-config: "rockpro64-rk3399_defconfig",
-            uboot-name: "rockpro64"
           },
         ]
     runs-on: ubuntu-22.04
@@ -70,6 +65,58 @@ jobs:
           path: |
             u-boot-quartz64/u-boot.itb
             u-boot-quartz64/idbloader.img
+  build_uboot_rockpro:
+    strategy:
+      matrix:
+        boards: [
+          {
+            name: "Rockpro64",
+            uboot-config: "rockpro64-rk3399_defconfig",
+            uboot-name: "rockpro64"
+          },
+        ]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Install toolchain
+        run: |
+            sudo apt-get update
+            sudo apt-get install build-essential crossbuild-essential-arm64 device-tree-compiler
+      - name: Clone ARM trusted firmwarer repository
+        uses: actions/checkout@v3
+        with:
+          repository: 'ARM-software/arm-trusted-firmware'
+          path: 'arm-trusted-firmware'
+      - name: Build firmware
+        run: |
+          cd arm-trusted-firmware
+          git rm '*.bin'
+          make -j$(nproc) PLAT=rk3399 CROSS_COMPILE=aarch64-unknown-linux-gnu- bl31
+          cd ..
+      - name: Clone u-boot repository
+        uses: actions/checkout@v3
+        with:
+          repository: 'u-boot/u-boot'
+          ref: 'deploy'
+          path: 'u-boot'
+      - name: Clean u-boot
+        run: |
+          cd u-boot
+          make mrproper
+      #- name: Fetch old rkbins
+        #run: |
+          #wget -q https://github.com/rockchip-linux/rkbin/blob/a4c6de9ea29f275bb1d08c94ccded51ff2ab5b92/bin/rk35/rk3566_ddr_1056MHz_v1.13.bin?raw=true -O u-boot-quartz64/ram_init.bin
+      - name: Build u-boot
+        run: |
+          cd u-boot
+          make ARCH=arm CROSS_COMPILE=aarch64-linux-gnu- ${{ matrix.boards.uboot-config }}
+          make BL31=../arm-trusted-firmware/bl31.elf ARCH=arm CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
+      - name: Archive u-boot artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: u-boot-${{ matrix.boards.uboot-name }}
+          path: |
+            u-boot/u-boot.itb
+            u-boot/idbloader.img
   # build_kernel:
   #   runs-on: self-hosted
   #   steps:
@@ -162,7 +209,8 @@ jobs:
         ]
     runs-on: ubuntu-22.04
     needs:
-      - build_uboot
+      - build_uboot_quartz
+      - build_uboot_rockpro
       # - build_kernel
     env:
       GOPATH: /opt/src/gocode
