@@ -33,7 +33,7 @@ jobs:
       - name: Install toolchain
         run: |
             sudo apt-get update
-            sudo apt-get install build-essential crossbuild-essential-arm64 device-tree-compiler
+            sudo apt-get install build-essential crossbuild-essential-arm64 device-tree-compiler python3-pyelftools
       #- name: Clone rkbin repository
       #  uses: actions/checkout@v3
       #  with:
