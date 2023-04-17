@@ -109,8 +109,8 @@ jobs:
       - name: Build u-boot
         run: |
           cd u-boot
-          make ARCH=arm CROSS_COMPILE=aarch64-linux-gnu- ${{ matrix.boards.uboot-config }}
-          make  ARCH=arm CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
+          make ARCH=arm CROSS_COMPILE=aarch64-linux-gnu- BL31=bl31.elf ${{ matrix.boards.uboot-config }}
+          make ARCH=arm CROSS_COMPILE=aarch64-linux-gnu- BL31=bl31.elf -j$(nproc)
       - name: Archive u-boot artifacts
         uses: actions/upload-artifact@v3
         with:
