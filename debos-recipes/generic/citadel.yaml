@@ -26,18 +26,10 @@ actions:
       - avahi-daemon
 
   - action: run
-    description: Install Docker & the compose plugin
+    description: Install Docker
     chroot: true
     command: |
       usermod -a -G docker {{ $username }}
-      mkdir -p /usr/lib/docker/cli-plugins
-      curl -o /usr/lib/docker/cli-plugins/docker-compose https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-linux-aarch64
-      chmod +x /usr/lib/docker/cli-plugins/docker-compose
-
-  - action: run
-    description: Fix avahi config to prevent hostname cycling
-    chroot: true
-    command: sed -i "s/#allow-interfaces=eth0/allow-interfaces=eth0,wlan0/g;" /etc/avahi/avahi-daemon.conf
 
   - action: run
     description: Fix avahi config to prevent hostname cycling
@@ -47,7 +39,7 @@ actions:
   - action: run
     description: Download Citadel
     chroot: true
-    command: git clone -b caddy https://github.com/citadel-core/core /home/citadel/citadel
+    command: git clone https://github.com/runcitadel/core /home/citadel/citadel
 
   - action: run
     description: Install Citadel system services
