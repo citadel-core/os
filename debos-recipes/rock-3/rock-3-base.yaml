@@ -27,25 +27,14 @@ actions:
 
   - action: overlay
     description: Copy initramfs overlay
-    source: overlays/initramfs-tools-nirvati-os/
+    source: overlays/initramfs-tools-citadel-os/
     destination: /etc/initramfs-tools/
-
-  - action: overlay
-    description: Copy apt config for Sid
-    source: overlays/apt/
-    destination: /etc/apt/
 
   - action: run
     description: Update apt packages
     chroot: true
     command: |
       apt-get update
-
-  - action: run
-    description: Install kernel from Sid
-    chroot: true
-    command: |
-      apt-get install -y linux-image-arm64 -t sid
 
   - action: run
     description: Set up u-boot default file
@@ -58,19 +47,11 @@ actions:
     command: u-boot-update
 
   - action: recipe
-    recipe: "../generic/nirvati.yaml"
+    recipe: "../generic/citadel.yaml"
     variables:
       username: {{ $username }}
       password: {{ $password }}
       architecture: {{ $architecture }}
-
-  - action: run
-    chroot: true
-    command: curl -o /home/nirvati/bootloader https://gitlab.com/nirvati/bootloader/-/jobs/4394503601/artifacts/raw/target/release/bootloader
-
-  - action: run
-    chroot: true
-    command: chmod +x /home/nirvati/bootloader
 
   - action: recipe
     recipe: "../generic/post.yaml"
