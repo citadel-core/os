@@ -44,10 +44,10 @@ jobs:
         with:
           repository: 'CounterPillow/u-boot-quartz64'
           ref: 'deploy'
-          path: 'u-boot-quartz64'
+          path: 'u-boot'
       - name: Clean u-boot
         run: |
-          cd u-boot-quartz64
+          cd u-boot
           make mrproper
           cd ..
       - name: Fetch old rkbins
@@ -56,7 +56,7 @@ jobs:
           wget -q https://github.com/rockchip-linux/rkbin/blob/9e44f3e17cc51378df294fcd909be48c0f07b47b/bin/rk35/rk3566_ddr_1056MHz_v1.16.bin?raw=true -O u-boot/ram_init.bin
       - name: Build u-boot
         run: |
-          cd u-boot-quartz64
+          cd u-boot
           make ARCH=arm CROSS_COMPILE=aarch64-linux-gnu- ${{ matrix.boards.uboot-config }}
           make ARCH=arm CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
       - name: Archive u-boot artifacts
@@ -64,8 +64,8 @@ jobs:
         with:
           name: u-boot-${{ matrix.boards.uboot-name }}
           path: |
-            u-boot-quartz64/u-boot.itb
-            u-boot-quartz64/idbloader.img
+            u-boot/u-boot.itb
+            u-boot/idbloader.img
   build_uboot_rockpro:
     strategy:
       matrix:
@@ -133,7 +133,7 @@ jobs:
       - name: Install toolchain
         run: |
             sudo apt-get update
-            sudo apt-get install build-essential crossbuild-essential-arm64 device-tree-compiler
+            sudo apt-get install build-essential crossbuild-essential-arm64 device-tree-compiler python3-pyelftools
       - name: Clone u-boot repository
         uses: actions/checkout@v3
         with:
