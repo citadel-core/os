@@ -27,6 +27,11 @@ jobs:
             uboot-config: "evb-rk3568_defconfig",
             uboot-name: "evb-rk3568"
           },
+          {
+            name: "Radxa CM3",
+            uboot-config: "radxa-cm3-io-rk3566_defconfig",
+            uboot-name: "radxa-cm3-io"
+          },
         ]
     runs-on: ubuntu-22.04
     steps:
@@ -66,7 +71,7 @@ jobs:
           path: |
             u-boot-quartz64/u-boot.itb
             u-boot-quartz64/idbloader.img
-  build_uboot_upstream:
+  build_uboot_rockpro:
     strategy:
       matrix:
         boards: [
@@ -74,12 +79,7 @@ jobs:
             name: "Rockpro64",
             uboot-config: "rockpro64-rk3399_defconfig",
             uboot-name: "rockpro64"
-          },
-          {
-            name: "Radxa CM3",
-            uboot-config: "radxa-cm3-io-rk3566_defconfig",
-            uboot-name: "radxa-cm3-io"
-          },
+          }
         ]
     runs-on: ubuntu-22.04
     steps:
