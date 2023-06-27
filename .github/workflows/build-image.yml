@@ -130,30 +130,11 @@ jobs:
         ]
     runs-on: ubuntu-22.04
     steps:
-      - name: Install toolchain
+      - name: Download prebuilt U-Boot
         run: |
-            sudo apt-get update
-            sudo apt-get install build-essential crossbuild-essential-arm64 device-tree-compiler python3-pyelftools
-      - name: Clone u-boot repository
-        uses: actions/checkout@v3
-        with:
-          repository: 'u-boot/u-boot'
-          ref: 'master'
-          path: 'u-boot'
-      - name: Clean u-boot
-        run: |
-          cd u-boot
-          make mrproper
-          cd ..
-      - name: Fetch old rkbins
-        run: |
-          wget -q https://github.com/rockchip-linux/rkbin/blob/7fac639ad6e3949ddb571cc9646c564d9af2bdeb/bin/rk35/rk3568_bl31_v1.42.elf?raw=true -O u-boot/bl31.elf
-          wget -q https://github.com/rockchip-linux/rkbin/blob/9e44f3e17cc51378df294fcd909be48c0f07b47b/bin/rk35/rk3566_ddr_1056MHz_v1.16.bin?raw=true -O u-boot/ram_init.bin
-      - name: Build u-boot
-        run: |
-          cd u-boot
-          make ARCH=arm CROSS_COMPILE=aarch64-linux-gnu- ${{ matrix.boards.uboot-config }}
-          make ARCH=arm CROSS_COMPILE=aarch64-linux-gnu- BL31=bl31.elf ROCKCHIP_TPL=ram_init.bin -j$(nproc)
+          mkdir -p u-boot
+          wget -q https://dl.radxa.com/rock3/images/loader/radxa-cm3-io/radxa-cm3-io-idbloader-g8684d740b9f.img -O u-boot/idbloader.img
+          wget -q https://dl.radxa.com/rock3/images/loader/radxa-cm3-io/radxa-cm3-io-u-boot-g8684d740b9f.itb -O u-boot/u-boot.itb
       - name: Archive u-boot artifacts
         uses: actions/upload-artifact@v3
         with:
