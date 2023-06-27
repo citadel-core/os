@@ -30,11 +30,22 @@ actions:
     source: overlays/initramfs-tools-citadel-os/
     destination: /etc/initramfs-tools/
 
+  - action: overlay
+    description: Copy apt config for Sid
+    source: overlays/apt/
+    destination: /etc/apt/
+
   - action: run
     description: Update apt packages
     chroot: true
     command: |
       apt-get update
+
+  - action: run
+    description: Install kernel from Sid
+    chroot: true
+    command: |
+      apt-get install -y linux-image-arm64 -t sid
 
   - action: run
     description: Set up u-boot default file
