@@ -39,7 +39,7 @@ actions:
   - action: run
     description: Download Citadel
     chroot: true
-    command: git clone https://github.com/runcitadel/core /home/citadel/citadel
+    command: git clone https://gitlab.com/nirvati/citadel/lts/core.git /home/citadel/citadel
 
   - action: run
     description: Install Citadel system services
