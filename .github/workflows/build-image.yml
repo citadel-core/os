@@ -52,8 +52,8 @@ jobs:
           cd ..
       - name: Fetch old rkbins
         run: |
-          wget -q https://github.com/rockchip-linux/rkbin/blob/7fac639ad6e3949ddb571cc9646c564d9af2bdeb/bin/rk35/rk3568_bl31_v1.42.elf?raw=true -O u-boot/bl31.elf
-          wget -q https://github.com/rockchip-linux/rkbin/blob/9e44f3e17cc51378df294fcd909be48c0f07b47b/bin/rk35/rk3566_ddr_1056MHz_v1.16.bin?raw=true -O u-boot/ram_init.bin
+          wget -q https://github.com/rockchip-linux/rkbin/blob/1ea59cc63be187cec53fc167e729bd0c738f9637/bin/rk35/rk3568_bl31_v1.43.elf?raw=true -O u-boot/bl31.elf
+          wget -q https://github.com/rockchip-linux/rkbin/blob/70a4b3fc75053d10a2718a75591a2fe998a207de/bin/rk35/rk3566_ddr_1056MHz_v1.18.bin?raw=true -O u-boot/ram_init.bin
       - name: Build u-boot
         run: |
           cd u-boot
