@@ -65,7 +65,6 @@ actions:
       - libnss-systemd
       - liblockfile-bin
       - e2fsprogs
-      - parted
       - ncurses-term
       - bluetooth
       - gawk

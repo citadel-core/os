@@ -4,7 +4,7 @@ architecture: arm64
 
 actions:
   - action: recipe
-    recipe: "rock-3-base.yaml"
+    recipe: "rock-5-base.yaml"
     variables:
       board: {{ $board }}
 
@@ -12,9 +12,9 @@ actions:
     description: Install kernel
     chroot: true
     command: |
-      apt-get install -y linux-image-radxa-cm3-rpi-cm4-io
+      apt-get install -y linux-image-radxa-cm5-rpi-cm4-io
   
   - action: recipe
-    recipe: "rock-3-finalize.yaml"
+    recipe: "rock-5-finalize.yaml"
     variables:
       board: {{ $board }}

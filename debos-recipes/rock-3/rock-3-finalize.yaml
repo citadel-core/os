@@ -1,0 +1,78 @@
+{{- $board := or .board "rock3a" -}}
+{{- $suite := or .suite "bookworm" -}}
+{{- $mirror := or .mirror "https://deb.debian.org/debian" -}}
+{{- $hostname := or .hostname "citadel" -}}
+{{- $image := or .image (printf "citadel-os-debian-%s-%s.img" $suite $board) -}}
+{{- $username := or .username "citadel" -}}
+{{- $password := or .password "freedom" -}}
+{{- $architecture := or .architecture "arm64" -}}
+
+architecture: {{ $architecture }}
+
+actions:
+  - action: run
+    description: Run u-boot-update
+    chroot: true
+    command: u-boot-update
+
+  - action: recipe
+    recipe: "../generic/citadel.yaml"
+    variables:
+      username: {{ $username }}
+      password: {{ $password }}
+      architecture: {{ $architecture }}
+
+  - action: recipe
+    recipe: "../generic/post.yaml"
+    variables:
+      suite: {{ $suite }}
+      mirror: {{ $mirror }}
+      hostname: {{ $hostname }}
+      architecture: {{ $architecture }}
+
+  - action: image-partition
+    description: Partition image
+    imagename: {{ $image }}
+    imagesize: 4GB
+    partitiontype: gpt
+    mountpoints:
+      - mountpoint: /
+        partition: root
+        options:
+          - 'x-systemd.growfs'
+    partitions:
+      - name: idbloader
+        fs: none
+        start: 64s
+        end: 16383s
+      - name: uboot
+        fs: none
+        start: 16384s
+        end: 65535s
+      - name: root
+        fs: ext4
+        start: 65536s
+        end: 100%
+        parttype: b921b045-1df0-41c3-af44-4c6f280d3fae  # ARM 64 root type
+        flags: [ legacy_boot ]
+
+  - action: filesystem-deploy
+    description: Deploy filesystem image
+
+  - action: raw
+    description: Write U-Boot SPL image
+    origin: recipe
+    source: '../u-boot/idbloader.img'
+    partition: idbloader
+
+  - action: raw
+    description: Write u-boot.itb
+    origin: recipe
+    source: '../u-boot/u-boot.itb'
+    partition: uboot
+
+  - action: run
+    description: Pack result image
+    postprocess: true
+    command: xz -z -v -f -T 0 {{ $image }}
+
