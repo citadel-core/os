@@ -69,6 +69,7 @@ actions:
       - bluetooth
       - gawk
       - network-manager
+      - curl
 
   - action: run
     description: Install standard packages
