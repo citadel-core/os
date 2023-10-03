@@ -1,5 +1,5 @@
 {{- $architecture := or .architecture "arm64" -}}
-{{- $board := or .board "cm3io" -}}
+{{- $board := or .board "cm3raspcm4io" -}}
 
 architecture: {{ $architecture }}
 

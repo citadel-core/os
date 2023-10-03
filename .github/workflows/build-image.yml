@@ -199,7 +199,7 @@ jobs:
           },
           {
             name: "Radxa CM3",
-            debos-yaml: "rock-3/cm3io.yaml",
+            debos-yaml: "rock-3/cm3raspcm4io.yaml",
             uboot-name: "radxa-cm3-io"
           },
         ]
