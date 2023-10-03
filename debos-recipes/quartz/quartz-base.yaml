@@ -27,6 +27,17 @@ actions:
     destination: /etc/apt/
 
   - action: run
+    description: Create dtbo dir
+    chroot: true
+    command: |
+      mkdir -p /boot/dtbo/
+
+  - action: overlay
+    description: Copy device tree config
+    source: overlays/boot/dtbo/
+    destination: /boot/dtbo/
+
+  - action: run
     description: Update apt packages
     chroot: true
     command: |
