@@ -1,4 +1,4 @@
-{{- $board := or .board "cm3raspcm4io" -}}
+{{- $board := or .board "rock3a" -}}
 {{- $suite := or .suite "bookworm" -}}
 {{- $mirror := or .mirror "https://deb.debian.org/debian" -}}
 {{- $hostname := or .hostname "citadel" -}}

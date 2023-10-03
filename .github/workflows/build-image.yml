@@ -142,6 +142,40 @@ jobs:
           path: |
             u-boot/u-boot.itb
             u-boot/idbloader.img
+  # build_kernel:
+  #   runs-on: self-hosted
+  #   steps:
+  #     - name: Clone workflow repository
+  #       uses: actions/checkout@v3
+  #     - name: Install toolchain
+  #       run: |
+  #           sudo apt-get -yq update && sudo apt-get -yq upgrade
+  #           sudo apt-get -yq install build-essential crossbuild-essential-arm64 device-tree-compiler \
+  #           autoconf bc bison flex ccache cpio dkms fakeroot kmod quilt rsync dh-exec \
+  #           libssl-dev libncurses-dev libelf-dev libudev-dev libpci-dev libiberty-dev
+  #     - name: Clone kernel repository
+  #       uses: actions/checkout@v3
+  #       with:
+  #         repository: 'CounterPillow/linux'
+  #         ref: 'quartz64-deploy'
+  #         path: 'linux'
+  #     - name: Make config
+  #       run: |
+  #         cp config linux/.config
+  #         cd linux
+  #         make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
+  #     - name: Build kernel
+  #       run: |
+  #         cd linux
+  #         make -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- deb-pkg
+  #     - name: Archive kernel artifacts
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: linux-kernel
+  #         path: |
+  #           linux-image-*.deb
+  #           linux-libc-dev*.deb
+  #           !linux-image-*dbg*.deb
   build_dt_debs:
     runs-on: ubuntu-22.04
     steps:
@@ -198,8 +232,8 @@ jobs:
             uboot-name: "rockpro64"
           },
           {
-            name: "Radxa CM3",
-            debos-yaml: "rock-3/cm3raspcm4io.yaml",
+            name: "BitPiRat",
+            debos-yaml: "rock-3/bitpirat.yaml",
             uboot-name: "radxa-cm3-io"
           },
         ]
@@ -229,7 +263,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install golang git libglib2.0-dev libostree-dev \
                                qemu-system-x86 qemu-user-static debootstrap \
-                               systemd-container
+                               systemd-container device-tree-compiler
       - name: Install debos
         run: go install -v github.com/go-debos/debos/cmd/debos@latest
       - name: Build ${{ matrix.boards.name }} Image
