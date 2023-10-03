@@ -2,10 +2,8 @@
 BOARD="$1"
 if [ "$BOARD" = "rock3a" ] ; then
     FDT_NAME="rockchip/rk3568-rock-3a.dtb"
-    FDT_DIR="/usr/lib/linux-image-"
 elif [ "$BOARD" = "bitpirat" ] ; then
-    FDT_NAME="cmrat.dtb"
-    FDT_DIR="/boot/dtb"
+    FDT_NAME="/boot/dtb/cmrat.dtb"
 fi
 
 mkdir -p /usr/share/u-boot-menu/conf.d/
