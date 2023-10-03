@@ -39,12 +39,12 @@ actions:
     description: Create dtbo dir
     chroot: true
     command: |
-      mkdir -p /boot/dtbo/
+      mkdir -p /boot/dtb/
 
   - action: overlay
     description: Copy device tree config
-    source: overlays/boot/dtbo/
-    destination: /boot/dtbo/
+    source: overlays/boot/dtb/
+    destination: /boot/dtb/
 
 
   - action: run

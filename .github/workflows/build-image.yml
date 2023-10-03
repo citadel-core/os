@@ -232,8 +232,8 @@ jobs:
             uboot-name: "rockpro64"
           },
           {
-            name: "BitPiRat",
-            debos-yaml: "rock-3/bitpirat.yaml",
+            name: "CMRat",
+            debos-yaml: "rock-3/cmrat.yaml",
             uboot-name: "radxa-cm3-io"
           },
         ]
