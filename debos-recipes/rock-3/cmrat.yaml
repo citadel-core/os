@@ -1,4 +1,4 @@
-{{- $board := or .board "bitpirat" -}}
+{{- $board := or .board "cmrat" -}}
 
 architecture: arm64
 

@@ -2,7 +2,7 @@
 BOARD="$1"
 if [ "$BOARD" = "rock3a" ] ; then
     FDT_NAME="rockchip/rk3568-rock-3a.dtb"
-elif [ "$BOARD" = "bitpirat" ] ; then
+elif [ "$BOARD" = "cmrat" ] ; then
     FDT_NAME="/boot/dtb/cmrat.dtb"
 fi
 
