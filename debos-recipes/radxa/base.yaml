@@ -1,0 +1,54 @@
+{{- $architecture := or .architecture "arm64" -}}
+{{- $board := or .board "cm3-rpi-cm4-io" -}}
+
+architecture: {{ $architecture }}
+
+actions:
+  - action: apt
+    description: Install u-boot-menu
+    update: true
+    recommends: true
+    packages:
+      - u-boot-menu
+
+  - action: overlay
+    description: Copy initramfs overlay
+    source: overlays/initramfs-tools-citadel-os/
+    destination: /etc/initramfs-tools/
+
+  - action: run
+    description: Install Radxa signing keys
+    chroot: true
+    script: scripts/install-repo.sh
+
+  - action: overlay
+    description: Copy apt config for Radxa
+    source: overlays/apt/
+    destination: /etc/apt/
+
+  - action: run
+    description: Update apt packages
+    chroot: true
+    command: |
+      apt-get update
+
+  - action: run
+    description: Install kernel
+    chroot: true
+    command: |
+      apt-get install -y linux-image-radxa-{{$board}} u-boot-radxa-{{$board}}
+
+  - action: run
+    description: Set up u-boot default file
+    chroot: true
+    script: scripts/set-u-boot-defaults.sh {{ $board }}
+
+  - action: raw
+    origin: filesystem
+    source: /usr/lib/u-boot-{{$board}}/idbloader.img
+    offset: '{{ sector 64 }}'
+
+  - action: raw
+    origin: filesystem
+    source: /usr/lib/u-boot-{{$board}}/u-boot.itb
+    offset: '{{ sector 16384 }}'

@@ -1,0 +1,14 @@
+{{- $board := or .board "cm3raspcm4io" -}}
+
+architecture: arm64
+
+actions:
+  - action: recipe
+    recipe: "rock-3-base.yaml"
+    variables:
+      board: {{ $board }}
+
+  - action: recipe
+    recipe: "rock-3-finalize.yaml"
+    variables:
+      board: {{ $board }}

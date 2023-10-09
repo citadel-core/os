@@ -1,4 +1,4 @@
-{{- $board := or .board "rock3a" -}}
+{{- $board := or .board "cm3-rpi-cm4-io" -}}
 {{- $suite := or .suite "bookworm" -}}
 {{- $mirror := or .mirror "https://deb.debian.org/debian" -}}
 {{- $hostname := or .hostname "citadel" -}}
@@ -58,18 +58,18 @@ actions:
 
   - action: filesystem-deploy
     description: Deploy filesystem image
+    setup-fstab: true
+    setup-kernel-cmdline: true
 
   - action: raw
-    description: Write U-Boot SPL image
-    origin: recipe
-    source: '../u-boot/idbloader.img'
-    partition: idbloader
+    origin: filesystem
+    source: /usr/lib/u-boot-{{$board}}/idbloader.img
+    offset: '{{ sector 64 }}'
 
   - action: raw
-    description: Write u-boot.itb
-    origin: recipe
-    source: '../u-boot/u-boot.itb'
-    partition: uboot
+    origin: filesystem
+    source: /usr/lib/u-boot-{{$board}}/u-boot.itb
+    offset: '{{ sector 16384 }}'
 
   - action: run
     description: Pack result image
