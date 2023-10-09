@@ -3,9 +3,9 @@ BOARD="$1"
 FDT_OVERLAYS=""
 if [ "$BOARD" = "rock3a" ] ; then
     FDT_NAME="rk3568-rock-3a.dtb"
-elif [ "$BOARD" = "cm3-rpi-cm4-io" ] ; then
-    FDT_NAME="rk3566-radxa-cm3-rpi-cm4-io.dtb"
-    FDT_OVERLAYS="radxa-cm3-raspcm4io-pcie2x1.dtbo"
+elif [ "$BOARD" = "cm3-io" ] ; then
+    FDT_NAME="rk3566-radxa-cm3-io.dtb"
+    FDT_OVERLAYS="radxa-cm3-io-pcie2x1.dtbo"
 elif [ "$BOARD" = "cm5io" ] ; then
     FDT_NAME="rk3588s-radxa-cm5-io.dtb"
 fi
