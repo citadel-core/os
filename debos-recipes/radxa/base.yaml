@@ -42,13 +42,3 @@ actions:
     description: Set up u-boot default file
     chroot: true
     script: scripts/set-u-boot-defaults.sh {{ $board }}
-
-  - action: raw
-    origin: filesystem
-    source: /usr/lib/u-boot-{{$board}}/idbloader.img
-    offset: '{{ sector 64 }}'
-
-  - action: raw
-    origin: filesystem
-    source: /usr/lib/u-boot-{{$board}}/u-boot.itb
-    offset: '{{ sector 16384 }}'
