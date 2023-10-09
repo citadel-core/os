@@ -118,29 +118,6 @@ jobs:
           path: |
             u-boot/u-boot.itb
             u-boot/idbloader.img
-  build_uboot_cm3:
-    strategy:
-      matrix:
-        boards: [
-          {
-            name: "Radxa CM3",
-            uboot-config: "radxa-cm3-io-rk3566_defconfig",
-            uboot-name: "radxa-cm3-io"
-          },
-        ]
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Download prebuilt U-Boot
-        run: |
-          touch u-boot/u-boot.itb
-          touch u-boot/idbloader.img
-      - name: Archive u-boot artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: u-boot-${{ matrix.boards.uboot-name }}
-          path: |
-            u-boot/u-boot.itb
-            u-boot/idbloader.img
   build_image:
     strategy:
       matrix:
@@ -178,15 +155,13 @@ jobs:
           {
             name: "Radxa CM3",
             debos-yaml: "rock-3/cm3raspcm4io.yaml",
-            uboot-name: "radxa-cm3-io"
+            uboot-name: ""
           },
         ]
     runs-on: ubuntu-22.04
     needs:
       - build_uboot_quartz
       - build_uboot_rockpro
-      - build_uboot_cm3
-      # - build_kernel
     env:
       GOPATH: /opt/src/gocode
     steps:
@@ -194,6 +169,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Download u-boot artifacts
         uses: actions/download-artifact@v3
+        if: matrix.boards.uboot-name != ''
         with:
           name: u-boot-${{ matrix.boards.uboot-name}}
           path: debos-recipes/u-boot/
