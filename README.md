@@ -1,19 +1,11 @@
-# Citadel OS Quartz64 Images
+# Citadel OS Rockchip images
 
 This repository contains the GitHub workflow files and debos recipes to create
-custom Debian-based operating system images for the Quartz64 line of SBCs from
-PINE64, including the SOQuartz.
+custom Debian-based operating system images for various Rockchip SCBs.
 
 The goal is to eventually have a fully automated solution for generating
 working mainline-kernel-based images for people to use, with a kernel package
 that is being updated.
-
-
-## Sources
-
-* u-boot: https://github.com/CounterPillow/u-boot-quartz64/tree/deploy
-* kernel: https://github.com/CounterPillow/linux/tree/quartz64-deploy
-  - unused at the moment
 
 
 ## Current Features

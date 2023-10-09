@@ -1,4 +1,4 @@
-name: Build Quartz64 Images
+name: Build images
 on:
  - push
  - workflow_dispatch
