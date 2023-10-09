@@ -1,4 +1,4 @@
-{{- $board := or .board "cm3raspcm4io" -}}
+{{- $board := or .board "cm3-rpi-cm4-io" -}}
 
 architecture: arm64
 
